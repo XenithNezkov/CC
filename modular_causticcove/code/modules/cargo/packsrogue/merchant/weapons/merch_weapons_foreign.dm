@@ -11,11 +11,11 @@
 */ // This is too big of a change right now, but it's here if anyone in the future wants to use it.
 
 /datum/supply_pack/rogue/merc_weapons/arquebus_powderflask
-	name = "Grenzelhoft Arquebus Powderflask"
+	name = "Arquebus Powderflask"
 	cost = 50
 	contains = list(/obj/item/powderflask)
 
-/datum/supply_pack/rogue/merc_weapons/arquebus_powderflask
-	name = "Grenzelhoft Arquebus Spare Ramrod"
+/datum/supply_pack/rogue/merc_weapons/arquebus_ramrod
+	name = "Arquebus Spare Ramrod"
 	cost = 20
 	contains = list(/obj/item/ramrod)
