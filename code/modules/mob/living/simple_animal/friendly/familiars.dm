@@ -18,9 +18,9 @@
 	butcher_results = list(/obj/item/natural/stone = 1)
 
 	pass_flags = PASSMOB //We don't want them to block players.
-	base_intents = list(INTENT_HELP)
-	melee_damage_lower = 1
-	melee_damage_upper = 2
+	base_intents = list(INTENT_HELP, /datum/intent/special/magicarc, INTENT_GRAB, INTENT_HARM) //Help, Arc, Grab, Harm.
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 
 	dextrous = TRUE
 	gender = MALE
@@ -63,12 +63,91 @@
 	. = ..()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, extinguish_mob)), 1 SECONDS)
 
+/mob/living/simple_animal/pet/familiar/proc/choose_spells()
+	if(mind) //Now CHOOSE YOUR POISON!!!
+		var/spells = list("Stillness of Stone", "Veiled Shift", "Inscriptor's Cache", "Soothing Vapors", "Smoldering Shroud", "Glimmering Jaunt", "Verdant Veil", "Grave Scent",
+		"Starseers Cry", "Pyroclastic Puff", "Phantasm Fade", )
+		var/spell_choice_1 = input(src, "Choose your first spell.", "PREPARE YOUR MAGIC.") as anything in spells
+		switch(spell_choice_1)
+			//Allows them to tank damage until they die, up to 50 damage before needing to re-cast.
+			if("Stillness of Stone")
+				AddSpell(/obj/effect/proc_holder/spell/self/stillness_of_stone)
+			//Teleportation! Can bring items around with hands from one place to another with ease.
+			if("Veiled Shift")
+				AddSpell(/obj/effect/proc_holder/spell/self/lurking_step)
+				AddSpell(/obj/effect/proc_holder/spell/invoked/veilbound_shift)
+			//Can hold books, spells, papers, notes, etc. Anything that is typepath of Book/Paper.
+			if("Inscriptor's Cache")
+				AddSpell(/obj/effect/proc_holder/spell/self/inscription_cache)
+				AddSpell(/obj/effect/proc_holder/spell/self/recall_cache)
+			//Healing AOE, toggle, very weak, only heals 2 damage every 10 seconds.
+			if("Soothing Vapors")
+				AddSpell(/obj/effect/proc_holder/spell/self/soothing_bloom)
+			//LOS Blocker, 5 Minute Cooldown as of this comment. Can possibly help in PvE to escape death? 2 tile radius.
+			if("Smoldering Shroud")
+				AddSpell(/obj/effect/proc_holder/spell/self/smolder_shroud)
+			//Free Blink! How neat! Allows you to teleport around instantly every 10 seconds.
+			if("Glimmering Jaunt")
+				AddSpell(/obj/effect/proc_holder/spell/invoked/blink/glimmer_hare)
+			//Applies temporary invisibility on everyone around the familiar for 5 seconds.
+			if("Verdant Veil")
+				AddSpell(/obj/effect/proc_holder/spell/self/verdant_veil)
+			//Amazing body locating spell, can track corpses and lead others to them.
+			if("Grave Scent")
+				AddSpell(/obj/effect/proc_holder/spell/self/scent_of_the_grave)
+			//Reveals anyone invisible/stealthing nearby in a large AOE and makes a comment in chat.
+			if("Starseers Cry")
+				AddSpell(/obj/effect/proc_holder/spell/self/starseers_cry)
+			//Portable flint and steel... useless since Prestidigation exists to be quite honest; Spammable however and great for clearing bushes and trees?
+			if("Pyroclastic Puff")
+				AddSpell(/obj/effect/proc_holder/spell/invoked/pyroclastic_puff)
+			//Quite literally doesn't even work... But it's meant to spawn a copy illusion that runs another way. It really has no use and should be replaced with something else.
+			/*if("(PLACEHOLDER YOU SHOULDNT SEE THIS) Phantom Flicker")
+				AddSpell(/obj/effect/proc_holder/spell/self/phantom_flicker) */\
+			//Allows the familiar to go invisible for 15 seconds. Great to throw people off track if you're stealing something, mostly PvP related.
+			if("Phantasm Fade")
+				AddSpell(/obj/effect/proc_holder/spell/self/phantasm_fade)
+			//Grows ... Grass! And Bushes! For free! ... Kind of useless and not worth it to farm shit, but cool flavor spell?
+			if("Verdant Sprout")
+				AddSpell(/obj/effect/proc_holder/spell/self/verdant_sprout)
+		//Second spell choice. 
+		var/spells_2 = spells - spell_choice_1 //Remove our first choice from the list.
+		var/spell_choice_2 = input(src, "Choose your second spell.", "PREPARE YOUR MAGIC.") as anything in spells_2
+		switch(spell_choice_2)
+			if("Stillness of Stone")
+				AddSpell(/obj/effect/proc_holder/spell/self/stillness_of_stone)
+			if("Veiled Shift")
+				AddSpell(/obj/effect/proc_holder/spell/self/lurking_step)
+				AddSpell(/obj/effect/proc_holder/spell/invoked/veilbound_shift)
+			if("Inscriptor's Cache")
+				AddSpell(/obj/effect/proc_holder/spell/self/inscription_cache)
+				AddSpell(/obj/effect/proc_holder/spell/self/recall_cache)
+			if("Soothing Vapors")
+				AddSpell(/obj/effect/proc_holder/spell/self/soothing_bloom)
+			if("Smoldering Shroud")
+				AddSpell(/obj/effect/proc_holder/spell/self/smolder_shroud)
+			if("Glimmering Jaunt")
+				AddSpell(/obj/effect/proc_holder/spell/invoked/blink/glimmer_hare)
+			if("Verdant Veil")
+				AddSpell(/obj/effect/proc_holder/spell/self/verdant_veil)
+			if("Grave Scent")
+				AddSpell(/obj/effect/proc_holder/spell/self/scent_of_the_grave)
+			if("Starseers Cry")
+				AddSpell(/obj/effect/proc_holder/spell/self/starseers_cry)
+			if("Pyroclastic Puff")
+				AddSpell(/obj/effect/proc_holder/spell/invoked/pyroclastic_puff)
+			if("Phantasm Fade")
+				AddSpell(/obj/effect/proc_holder/spell/self/phantasm_fade)
+			if("Verdant Sprout")
+				AddSpell(/obj/effect/proc_holder/spell/self/verdant_sprout)
+
 /mob/living/simple_animal/pet/familiar/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOFALLDAMAGE1, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_INFINITE_STAMINA, TRAIT_GENERIC)
 	AddComponent(/datum/component/footstep, footstep_type)
+	AddSpell(/obj/effect/proc_holder/spell/invoked/projectile/arcynebolt/familiar) //Make sure all of them get this fancy Arcyne
 
 /mob/living/simple_animal/pet/familiar/proc/can_bite()
 	for(var/obj/item/grabbing/grab in grabbedby) //Grabbed by the mouth
@@ -109,7 +188,6 @@
     icon_living = "pondstone"
     icon_dead = "pondstone_dead"
     buff_given = /datum/status_effect/buff/familiar/settled_weight
-    inherent_spell = list(/obj/effect/proc_holder/spell/self/stillness_of_stone)
     STASTR = 11
     STAPER = 7
     STAINT = 9
@@ -146,7 +224,6 @@
     icon_dead = "mist_dead"
     alpha = 150
     buff_given = /datum/status_effect/buff/familiar/silver_glance
-    inherent_spell = list(/obj/effect/proc_holder/spell/self/lurking_step, /obj/effect/proc_holder/spell/invoked/veilbound_shift)
     pass_flags = PASSGRILLE | PASSMOB
     STASTR = 6
     STAPER = 11
@@ -179,7 +256,6 @@
     icon_living = "runerat"
     icon_dead = "runerat_dead"
     buff_given = /datum/status_effect/buff/familiar/threaded_thoughts
-    inherent_spell = list(/obj/effect/proc_holder/spell/self/inscription_cache, /obj/effect/proc_holder/spell/self/recall_cache)
     STASTR = 5
     STAPER = 9
     STAINT = 11
@@ -212,7 +288,6 @@
     icon_dead = "vaporroot_dead"
     alpha = 150
     buff_given = /datum/status_effect/buff/familiar/quiet_resilience
-    inherent_spell = list(/obj/effect/proc_holder/spell/self/soothing_bloom)
     pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
     movement_type = FLYING
     STASTR = 4
@@ -239,7 +314,6 @@
 	summoning_emote = "Dust rises and circles before coiling into a gray-scaled creature that radiates dry, residual warmth."
 	animal_species = "Ashcoiler"
 	buff_given = /datum/status_effect/buff/familiar/desert_bred_tenacity
-	inherent_spell = list(/obj/effect/proc_holder/spell/self/smolder_shroud)
 	butcher_results = list(/obj/item/ash = 1)
 	STASTR = 7
 	STAPER = 8
@@ -273,7 +347,6 @@
 	summoning_emote = "The air glints, and a translucent hare twitches into existence."
 	animal_species = "Glimmer Hare"
 	buff_given = /datum/status_effect/buff/familiar/lightstep
-	inherent_spell = list(/obj/effect/proc_holder/spell/invoked/blink/glimmer_hare)
 	STASTR = 4
 	STAPER = 9
 	STACON = 6
@@ -306,7 +379,6 @@
 	summoning_emote = "A musical chime sounds. A tiny deer with antlers like bone flutes steps gently into view."
 	animal_species = "Hollow Antlerling"
 	buff_given = /datum/status_effect/buff/familiar/soft_favor
-	inherent_spell = list(/obj/effect/proc_holder/spell/self/verdant_veil)
 
 	STASTR = 6
 	STACON = 8
@@ -339,7 +411,6 @@
 	animal_species = "Gravemoss Serpent"
 	butcher_results = list(/obj/item/natural/dirtclod = 1)
 	buff_given = /datum/status_effect/buff/familiar/burdened_coil
-	inherent_spell = list(/obj/effect/proc_holder/spell/self/scent_of_the_grave)
 
 	STASTR = 11
 	STAPER = 8
@@ -374,7 +445,6 @@
 	buff_given = /datum/status_effect/buff/familiar/starseam
 	pass_flags = PASSTABLE | PASSMOB
 	movement_type = FLYING
-	inherent_spell = list(/obj/effect/proc_holder/spell/self/starseers_cry)
 	STASTR = 4
 	STAPER = 11
 	STACON = 6
@@ -411,7 +481,6 @@
 	summoning_emote = "A hush falls as glowing ash collects into a fluttering emberdrake."
 	animal_species = "Emberdrake"
 	buff_given = /datum/status_effect/buff/familiar/steady_spark
-	inherent_spell = list(/obj/effect/proc_holder/spell/invoked/pyroclastic_puff)
 	butcher_results = list(/obj/item/ash = 1)
 	STASTR = 9
 	STAPER = 8
@@ -445,7 +514,6 @@
 	summoning_emote = "A ripple in the air becomes a sleek fox, their fur twitching between shades of color as they pads forth."
 	animal_species = "Ripplefox"
 	buff_given = /datum/status_effect/buff/familiar/subtle_slip
-	inherent_spell = list(/obj/effect/proc_holder/spell/self/phantom_flicker)
 	STASTR = 5
 	STACON = 8
 	STAWIL = 9
@@ -476,7 +544,6 @@
 	summoning_emote = "A thought twists into form, a tiny stoat slinks into view."
 	animal_species = "Whisper Stoat"
 	buff_given = /datum/status_effect/buff/familiar/noticed_thought
-	inherent_spell = list(/obj/effect/proc_holder/spell/self/phantasm_fade)
 	STASTR = 5
 	STAPER = 11
 	STAINT = 11
@@ -509,7 +576,6 @@
 	summoning_emote = "The ground gives a slow rumble. A turtle with a bark-like shell emerges from the soil."
 	animal_species = "Thornback Turtle"
 	buff_given = /datum/status_effect/buff/familiar/worn_stone
-	inherent_spell = list(/obj/effect/proc_holder/spell/self/verdant_sprout)
 	STASPD = 5
 	STAPER = 7
 	STAINT = 9
@@ -940,6 +1006,18 @@
     speak_emote = "chimes"
     emote_hear = list("chimes.", "clicks.", "makes a faint ticking sound.")
     emote_see = list("glints in the light.", "shifts its crystalline spires.", "spins in a small circle.")
+
+//Familiar Specific Arcyne Bolt to allow for PvE and minor PvP assistance.
+/obj/effect/proc_holder/spell/invoked/projectile/arcynebolt/familiar
+	name = "Familiar's Arcyne Bolt"
+	desc = "Shoot out a rapid bolt of arcyne magic. Inflicts blunt damage similar to a slingstone. \n\
+	Damage is increased by 50% versus simple-minded creechurs.\n\
+	Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent. It will deals 25% less damage that way."
+
+	//Works like normal Arcyne Bolt, but fires slower and has a very limited range.
+	range = 6
+	recharge_time = 6 SECONDS
+	human_req = FALSE
 
 #undef FAMILIAR_SEE_IN_DARK
 #undef FAMILIAR_MIN_BODYTEMP

@@ -112,7 +112,7 @@
 	. = ..()
 
 	user.visible_message(
-		span_notice("[user.name] lifts its head, tongue flickering as it tastes the air..."),
+		span_notice("[user.name] lifts its head as it senses the air..."),
 		span_notice("You raise your head, tasting the air for the scent of the dead.")
 	)
 
@@ -225,20 +225,40 @@
 
 /obj/effect/proc_holder/spell/self/soothing_bloom/cast(list/targets, mob/living/simple_animal/pet/familiar/vaporroot_wisp/user)
 	. = ..()
-
-	user.visible_message(span_notice("[user.name] releases a soothing vapor"),span_notice("You release a soothing vapor"))
-	for (var/mob/living/nearby_mob in view(SOOTHING_BLOOM_RANGE, user))
-		if(nearby_mob == user || isdead(nearby_mob))
-			continue
-		nearby_mob.apply_status_effect(/datum/status_effect/regen/soothing_bloom)
-		to_chat(nearby_mob, span_notice("A cool mist settles on your skin, and you feel your wounds slowly close."))
+	if(!user.has_status_effect(/datum/status_effect/regen/soothing_origin))
+		user.visible_message(span_notice("[user.name] releases a soothing vapor."),span_notice("You release a soothing vapor."))
+		user.apply_status_effect(/datum/status_effect/regen/soothing_origin)
+	else if(user.has_status_effect(/datum/status_effect/regen/soothing_origin))
+		user.visible_message(span_notice("[user.name] stops releasing vapors."),span_notice("You stop releasing vapors."))
+		user.remove_status_effect(/datum/status_effect/regen/soothing_origin)
 	return TRUE
+
+/datum/status_effect/regen/soothing_origin
+	id = "soothing_bloom"
+	alert_type = /atom/movable/screen/alert/status_effect/regen/soothing_origin
+	duration = -1 //Toggle ability
+	var/healing_range = 2 //Shorter than campfire range by 1 tile.
+
+/atom/movable/screen/alert/status_effect/regen/soothing_origin
+	name = "Soothing Origin"
+	desc = "You are gently releasing healing vapors to others around you."
+
+/datum/status_effect/regen/soothing_origin/tick()
+	. = ..()
+	var/list/hearers_in_range = SSspatial_grid.orthogonal_range_search(src, SPATIAL_GRID_CONTENTS_TYPE_HEARING, healing_range)
+	for(var/mob/living/carbon/human/human in hearers_in_range)
+		var/distance = get_dist(src, human)
+		if(distance > healing_range)
+			continue
+		if(!human.has_status_effect(/datum/status_effect/regen/soothing_bloom))
+			to_chat(human, "A cool mist settles on your skin, and you feel your wounds slowly close.")
+			human.apply_status_effect(/datum/status_effect/regen/soothing_bloom)
 
 /datum/status_effect/regen/soothing_bloom
 	id = "soothing_bloom"
-	tick_interval = 40 //This should give it two ticks of 1 healing per person in the radius.
+	tick_interval = 5 SECONDS //Only heals 1 HP every 5 seconds. 0.2 hp/s for a total of 2 HP every 10 seconds. Stackable with miracles/bard/campfire.
 	alert_type = /atom/movable/screen/alert/status_effect/regen/soothing_bloom
-	duration = 8 SECONDS
+	duration = 10 SECONDS
 	var/healing_on_tick = 1
 	var/outline_colour = "#129160"
 
@@ -385,10 +405,10 @@
 	name= "Phantom Flicker"
 	recharge_time = 2 MINUTES
 
-/obj/effect/proc_holder/spell/self/phantom_flicker/cast(list/targets, mob/living/simple_animal/pet/familiar/ripplefox/user)
+/obj/effect/proc_holder/spell/self/phantom_flicker/cast(list/targets, mob/living/simple_animal/pet/familiar/user)
 	. = ..()
 
-	var/mob/living/simple_animal/pet/familiar/ripplefox/illusory_familiar = new user.type(user.loc)
+	var/mob/living/simple_animal/pet/familiar/illusory_familiar = new user.type(user.loc)
 	user.visible_message(span_notice("[user.name] blurs and darts away in two directions at once!"))
 
 	illusory_familiar.familiar_summoner = user
