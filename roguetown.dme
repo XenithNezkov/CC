@@ -2990,6 +2990,7 @@
 #include "modular_causticcove\code\modules\sizecats\sizecat_types.dm"
 #include "modular_causticcove\code\modules\sizecats\sizecats.dm"
 #include "modular_causticcove\code\modules\sizecats\spells\shrink.dm"
+#include "modular_causticcove\code\modules\spells\spell_types\wizard\conjure\conjure_tool.dm"
 #include "modular_causticcove\code\modules\standardized_sprite\standardized_sprite_verb.dm"
 #include "modular_causticcove\code\modules\taurs\taur_bodyparts.dm"
 #include "modular_causticcove\code\modules\taurs\taur_markings.dm"
