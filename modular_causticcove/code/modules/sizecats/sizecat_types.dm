@@ -17,7 +17,7 @@
 	name =  "Macro"
 	desc = "Somehow, due to a freak accident or magical energies, my form is absolutely colossal. My strength and body are second to none. However, the ground beneath shifts, causing my speed to suffer greatly."
 	added_traits = list(TRAIT_MACRO)
-	custom_text = "Greatly increases your sprite size. Makes you very strong and durable but reduces your speed close to, if not to the minimum."
+	custom_text = "Greatly increases your sprite size. Makes you stronger and more durable but reduces your movement speed. Your speed stat remains unaffected."
 
 /datum/sizecat/macro/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.transform = recipient.transform.Scale(2, 2)
@@ -30,9 +30,9 @@
 
 /datum/sizecat/small
 	name = "Small"
-	desc ="Somehow, due to a freak accident or magical energies, my form is below average in height.  My strength and body are impacted.  However, my smaller size allows me to slip blows that would hit others."
+	desc ="Somehow, due to a freak accident or magical energies, my form is below average in height.  My strength and body are impacted.  However, my smaller size allows me to better slip by others unnoticed."
 	added_traits = list(TRAIT_SMALL)
-	custom_text = "Reduces your sprite size.  Makes you agile but slow.  In addition, your stealth will be strengthened.  Your strength and durability will be lower than average."
+	custom_text = "Reduces your sprite size.  Your stealth is strengthened.  Your strength and durability will be lower than average."
 
 /datum/sizecat/small/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.transform = recipient.transform.Scale(0.75, 0.75)
@@ -47,9 +47,9 @@
 
 /datum/sizecat/micro
 	name = "Micro"
-	desc ="Somehow, due to a freak accident or magical energies, my form is absolutely tiny. My strength and body are lacking. However, my dimutive size allows me to dodge blows that would otherwise hit others."
+	desc ="Somehow, due to a freak accident or magical energies, my form is absolutely tiny. My strength and body are lacking. However, my dimutive size allows me to greatly stay hidden, sometimes even in plain sight."
 	added_traits = list(TRAIT_MICRO)
-	custom_text = "Greatly reduces your sprite size. Makes you very agile, but slow. In addition, your stealth will be strengthened greatly. Your strength and durability will be close to, if not the minimum however."
+	custom_text = "Greatly reduces your sprite size. Your stealth will be strengthened greatly, however your strength, durability, and movement speed will be reduced greatly."
 
 /datum/sizecat/micro/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.transform = recipient.transform.Scale(0.2, 0.2)
