@@ -425,6 +425,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			saddle_storage.show_to(user)
 	..()
 
+// Caustic Edit - Jon
 /mob/living/simple_animal/proc/butcher(mob/living/user, on_meathook = FALSE)
 	if(ssaddle)
 		ssaddle.forceMove(get_turf(src))
@@ -503,7 +504,11 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		playsound(src, 'sound/foley/gross.ogg', 100, FALSE)
 	if(isemptylist(butcher_results))
 		to_chat(user, "<span class='notice'>I finish butchering: [butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)].</span>")
-		gib()
+		
+		//gib()
+
+/mob/living/simple_animal/proc/
+// Caustic Edit End
 
 /mob/living/proc/butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)
     var/list/parts = list()
