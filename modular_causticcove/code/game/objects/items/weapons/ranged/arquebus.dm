@@ -37,6 +37,7 @@
 	pickup_sound = 'modular_causticcove/sound/sheath_sounds/draw_from_holster.ogg'
 	var/spread_num = 10
 	var/damfactor = 2
+	var/range = 30
 	var/reloaded = FALSE
 	var/load_time = 50
 	var/gunpowder = FALSE
@@ -230,6 +231,7 @@
 	for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
 		var/obj/projectile/BB = CB.BB
 		BB.damage = BB.damage * damfactor
+		BB.range = range
 	gunpowder = FALSE
 	reloaded = FALSE
 	user.adjust_experience(/datum/skill/combat/firearms, (user.STAINT*5))
@@ -294,6 +296,7 @@
 	pickup_sound = 'modular_causticcove/sound/sheath_sounds/draw_from_holster.ogg'
 	slot_flags = ITEM_SLOT_HIP
 	var/damfactor = 2
+	var/range = 10
 	var/reloaded = FALSE
 	var/load_time = 50
 	var/gunpowder = FALSE
@@ -436,6 +439,7 @@
 	for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
 		var/obj/projectile/BB = CB.BB
 		BB.damage = BB.damage * damfactor
+		BB.range = range
 	gunpowder = FALSE
 	reloaded = FALSE
 	spark_act()
