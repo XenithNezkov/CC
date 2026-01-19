@@ -104,7 +104,10 @@
 		var/obj/item/bodypart/limb = victim.get_bodypart(zone)
 		if(!limb)
 			begin_eat(victim)
-		victim.flash_fullscreen("redflash3")
+		//Caustic Edit
+		if(victim.show_redflash())
+			victim.flash_fullscreen("redflash3")
+		//Caustic Edit End
 		playsound(loc, list('sound/vo/mobs/plant/attack (1).ogg','sound/vo/mobs/plant/attack (2).ogg','sound/vo/mobs/plant/attack (3).ogg','sound/vo/mobs/plant/attack (4).ogg'), 100, FALSE, -1)
 		if(prob(chew_factor * 15))
 			if(limb.dismember(damage = 20))

@@ -87,7 +87,10 @@
 							playsound(loc, 'sound/combat/hits/burn (1).ogg', 100, FALSE, -1)
 							user.adjust_fire_stacks(10)
 							user.ignite_mob()
-							user.flash_fullscreen("redflash3")
+							//Caustic Edit
+							if(user.show_redflash())
+								user.flash_fullscreen("redflash3")
+							//Caustic Edit End
 							user.emote("firescream")
 						guidinglight(src) // Actually starts the proc for applying the buff
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
@@ -226,7 +229,10 @@
 	var/ritualtargets = view(0, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		to_chat(target,span_userdanger("You feel them crawling into your wounds and pores. Their horrific hum rings through your ears as they do their work!"))
-		target.flash_fullscreen("redflash3")
+		//Caustic Edit
+		if(target.show_redflash())
+			target.flash_fullscreen("redflash3")
+		//Caustic Edit End
 		target.emote("agony")
 		target.Stun(200)
 		target.Knockdown(200)

@@ -154,7 +154,9 @@
 	if(prefs)
 		prefs.no_redflash = !prefs.no_redflash
 		prefs.save_preferences()
-		to_chat(src, "You will see the red flashing effect [prefs.no_redflash ? "less" : "more"] frequently.")
+		//Caustic Edit
+		to_chat(src, "You [prefs.no_redflash ? "will not" : "will"] see the red flashing effect.")
+		//Caustic Edit End
 
 /client/verb/toggle_lobby_music()
 	set name = "Toggle Lobby Music"

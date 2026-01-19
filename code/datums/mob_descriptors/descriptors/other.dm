@@ -94,9 +94,11 @@
 		return FALSE
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))
 		return FALSE
-	var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
-	if(penis && penis.sheath_type == SHEATH_TYPE_SLIT) //If our penis hides in a slit, dont describe testicles
-		return FALSE
+	//Caustic Edit - Allow external balls even with a slit if someone likes it!
+	//var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
+	//if(penis && penis.sheath_type == SHEATH_TYPE_SLIT) //If our penis hides in a slit, dont describe testicles
+		//return FALSE
+	//Caustic Edit End
 	return TRUE
 
 /datum/mob_descriptor/testicles/get_description(mob/living/described)
