@@ -39,6 +39,9 @@
 		to_chat(loc, span_notice(repairmsg_end))
 		if(reptimer)
 			deltimer(reptimer)
+			//Caustic Edit - Fix to get the armor working again, potentially!
+			reptimer = 0
+			//Caustic Edit End
 		return
 
 	to_chat(loc, span_notice(repairmsg_continue))
