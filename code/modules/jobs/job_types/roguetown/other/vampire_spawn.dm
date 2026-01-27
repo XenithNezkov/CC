@@ -2,7 +2,7 @@
 /datum/job/roguetown/vampire_spawn
 	title = "Vampire Spawn"
 	flag = VAMPIRE_SERVANT
-	department_flag = SLOP
+	department_flag = ANTAGONIST
 	faction = "Station"
 	total_positions = 0
 	spawn_positions = 0
@@ -44,7 +44,7 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/bows = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
