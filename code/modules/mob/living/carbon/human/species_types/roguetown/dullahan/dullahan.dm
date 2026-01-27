@@ -40,6 +40,9 @@
 		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,0), OFFSET_BACK_F = list(0,-1), \
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		//Caustic Edit
+		OFFSET_TAUR = list(-16,0), OFFSET_TAUR_F = list(-16,0), \
+		//Caustic End
 		)
 	enflamed_icon = "widefire"
 	bodypart_overrides = list(
@@ -98,7 +101,6 @@
 		/datum/body_marking_set/tiger,
 		/datum/body_marking_set/tiger_dark,
 		//Caustic edit
-		/datum/body_marking_set/bellysocks,
 		/datum/body_marking_set/gradient,
 		//Caustic edit end
 	)
@@ -163,7 +165,6 @@
 	languages = list(
 		/datum/language/common,
 	)
-
 	///Caustic edit
 	allowed_taur_types = list(
 		/obj/item/bodypart/taur/lamia,
@@ -192,6 +193,7 @@
 		/obj/item/bodypart/taur/bunny,
 	)
 	///Caustic edit end
+
 	restricted_virtues = list(/datum/virtue/utility/deathless)
 
 	stress_examine = TRUE
